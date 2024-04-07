@@ -18,5 +18,7 @@ public interface IEnquiryService {
 	
 	
 	public Enquiry editEnquiry(Integer enquiryId);
+	
+//	public boolean enquiryPresent(Integer id);
 
 }

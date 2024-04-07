@@ -50,12 +50,54 @@ public class EnquiryImp implements IEnquiryService {
 	
 	@Override
 	public boolean saveEnquiry(Enquiry e, Integer counsellorId) {
-		 Counsellor counsellor = counRepo.findById(counsellorId).orElseThrow();
-		 
-		 e.setCounsellor_Id(counsellor);
-		 
-		 Enquiry save = enqRepo.save(e);
-		 return save.getEnquiryId()!=null;
+		
+		
+		
+		// Retrieve the counsellor based on the provided counsellorId
+	    Counsellor counsellor = counRepo.findById(counsellorId).orElseThrow();
+
+	    // Set the retrieved counsellor for the enquiry
+	    e.setCounsellor_Id(counsellor);
+
+	    // Check if the enquiry has an ID (indicating it's an existing record)
+	    if (e.getEnquiryName() != null) {
+	        // If it has an ID, it means it already exists in the database, so update it
+	        Enquiry existingEnquiry = enqRepo.findById(e.getEnquiryId()).orElseThrow();
+	        existingEnquiry.setEnquiryName(e.getEnquiryName());
+	        existingEnquiry.setEnquiryPhne(e.getEnquiryPhne());
+	        existingEnquiry.setCourse(e.getCourse());
+	        existingEnquiry.setMode(e.getMode());
+	        existingEnquiry.setStatus(e.getStatus());
+	        
+	        // Save the updated enquiry
+	        enqRepo.save(existingEnquiry);
+	        
+	        return true; // Indicate successful update
+	    } else {
+	        // If it doesn't have an ID, it's a new record, so save it as usual
+	        Enquiry savedEnquiry = enqRepo.save(e);
+	        return savedEnquiry.getEnquiryId() != null; // Indicate successful save
+	    }
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+//		 Counsellor counsellor = counRepo.findById(counsellorId).orElseThrow();
+//		 
+//		 e.setCounsellor_Id(counsellor);
+//		 
+//		 Enquiry save = enqRepo.save(e);
+//		
+//		 return save.getEnquiryId()!=null;
 	}
 
 	
@@ -91,5 +133,12 @@ public class EnquiryImp implements IEnquiryService {
 		}
 		return null;
 	}
+
+
+//	@Override
+//	public boolean enquiryPresent(Integer id) {
+//		boolean byEnquiryId = enqRepo.findByEnquiryId(id);
+//		return byEnquiryId;
+//	}
 
 }

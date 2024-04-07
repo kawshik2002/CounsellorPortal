@@ -29,7 +29,6 @@
         </li>
         <li class="nav-item">
 			<form id="logoutForm" th:action="@{/logout}" method="post">
-				<!--<button type="submit"  class="nav-link">Logout</button>-->
           <a class="nav-link" href="/index" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
           </form>
         </li>
@@ -58,7 +57,7 @@
 			<form th:object="${addObj}" th:action="@{/addEnquiry}" method="post">
     <!-- Your form fields -->
 			
-			
+			<input type="hidden" th:field="*{enquiryId}" />
 			<table>
 				
 				<tr>

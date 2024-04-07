@@ -16,6 +16,7 @@ import in.kawshik.entity.Enquiry;
 import in.kawshik.service.IEnquiryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.server.PathParam;
 
 //import in.kawshik.service.IEnquiryService;
 
@@ -59,6 +60,7 @@ public class EnquiryController {
 		HttpSession session = req.getSession(false);
 		Object attribute = session.getAttribute("cid");
 		
+//		}
 		if(e.getEnquiryName()!=null) {
 			enquiryService.saveEnquiry(e, (Integer) attribute);
 			m.addAttribute("smsg","Recored inserted succesfully");
@@ -77,37 +79,37 @@ public class EnquiryController {
 	public String getEditView(@PathVariable("enquiryId") Integer id,Model m,HttpServletRequest req) {
 		
 		
-		Enquiry editEnquiry = enquiryService.editEnquiry(  id);
+		Enquiry editEnquiry = enquiryService.editEnquiry(id);
 		
-		m.addAttribute("editEnquiry", editEnquiry);
+		m.addAttribute("addObj", editEnquiry);
 		
-		return "editEnquiry";
+		return "addEnquiry";
 	}
 	
 	
-	
-	@PostMapping("/edit/{enquiryId}")
-	public String saveEditView(@PathVariable("enquiryId") Integer id,@ModelAttribute("editEnquiry") Enquiry enquiry,Model m,HttpServletRequest req) {
-		
-		HttpSession session = req.getSession(false);
-		Object attribute = session.getAttribute("cid");
-		
-//		Enquiry editEnquiry = enquiryService.editEnquiry(id);
-		
-		Enquiry editedEnquiry = enquiryService.editEnquiry(id);
-	    editedEnquiry.setEnquiryName(enquiry.getEnquiryName());
-	    editedEnquiry.setEnquiryPhne(enquiry.getEnquiryPhne());
-	    editedEnquiry.setCourse(enquiry.getCourse());
-	    editedEnquiry.setMode(enquiry.getMode());
-	    editedEnquiry.setStatus(enquiry.getStatus());
-		
-		
-		
-		
-		enquiryService.saveEnquiry(editedEnquiry,(Integer) attribute);
-		
-		return "redirect:/view";
-	}
+//	
+//	@PostMapping("/edit/{enquiryId}")
+//	public String saveEditView(@PathVariable("enquiryId") Integer id,@ModelAttribute("editEnquiry") Enquiry enquiry,Model m,HttpServletRequest req) {
+//		
+//		HttpSession session = req.getSession(false);
+//		Object attribute = session.getAttribute("cid");
+//		
+////		Enquiry editEnquiry = enquiryService.editEnquiry(id);
+//		
+//		Enquiry editedEnquiry = enquiryService.editEnquiry(id);
+//	    editedEnquiry.setEnquiryName(enquiry.getEnquiryName());
+//	    editedEnquiry.setEnquiryPhne(enquiry.getEnquiryPhne());
+//	    editedEnquiry.setCourse(enquiry.getCourse());
+//	    editedEnquiry.setMode(enquiry.getMode());
+//	    editedEnquiry.setStatus(enquiry.getStatus());
+//		
+//		
+//		
+//		
+//		enquiryService.saveEnquiry(editedEnquiry,(Integer) attribute);
+//		
+//		return "redirect:/view";
+//	}
 	
 	
 	@GetMapping("/view")

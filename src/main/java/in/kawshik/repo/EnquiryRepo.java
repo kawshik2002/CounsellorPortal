@@ -9,6 +9,7 @@ import in.kawshik.entity.Enquiry;
 
 public interface EnquiryRepo extends JpaRepository<Enquiry, Integer> {
 	
+	public boolean findByEnquiryId(Integer id);
 	
 	@Query(value = "select count(*) from enquiry where counsellor_Id=:id",nativeQuery = true)
 	public Long totalEnquiries(Integer id);
